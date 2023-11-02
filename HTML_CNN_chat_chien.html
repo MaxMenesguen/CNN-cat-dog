@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reconnaissance Chien/Chat</title>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+</head>
+<body>
+  <h1>Reconnaissance Chien/Chat</h1>
+  <input type="file" id="inputImage" onchange="chargerImage(event)" />
+  <button onclick="executerModele()">Reconnaître</button>
+  <div>
+    <p>Image Importée:</p>
+    <canvas id="imageImportee" style="border:1px solid black; width: 200px; height: 200px;"></canvas>
+  </div>
+  <div>
+    <p>Image Transformée donnée au Network:</p>
+    <canvas id="imageTransformee" style="border:1px solid black; width: 200px; height: 200px;"></canvas>
+
+  </div>
+  <p id="resultat"></p>
+  <script src="script.js"></script>
+</body>
+</html>
+
