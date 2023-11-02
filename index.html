@@ -1,38 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Titre de votre Modèle</title>
+  <title>Reconnaissance Chien/Chat</title>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
 </head>
 <body>
-  <h1>Titre de votre Modèle</h1>
-  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
-  <script>
-    const getImgData = () => {
-      const data = []
-      for (let i = 0; i < 1 * 1 * 50 * 50; ++i) {
-        data.push(0)
-      }
-      return data
-    }
+  <h1>Reconnaissance Chien/Chat</h1>
+  <input type="file" id="inputImage" onchange="chargerImage(event)" />
+  <button onclick="executerModele()">Reconnaître</button>
+  <div>
+    <p>Image Importée:</p>
+    <canvas id="imageImportee" style="border:1px solid black; width: 200px; height: 200px;"></canvas>
+  </div>
+  <div>
+    <p>Image Transformée donnée au Network:</p>
+    <canvas id="imageTransformee" style="border:1px solid black; width: 200px; height: 200px;"></canvas>
 
-    const softmax = (data) => {
-      const exps = data.map((value) => Math.exp(value))
-      const sumExps = exps.reduce((acc, val) => acc + val)
-      return exps.map((exp) => exp / sumExps)
-    }
-
-    const main = async () => {
-      const session = await ort.InferenceSession.create('http://localhost:8080/chemin_vers_votre_modele.onnx')
-      const data = Float32Array.from(getImgData()).map((pixel) => (pixel - 0.1307) / 0.3081) // Ajustez selon vos besoins
-      const input = new ort.Tensor('float32', data, [1, 1, 50, 50])
-      const result = await session.run({ 'input': input })
-      const logits = result.output.data
-      const probas = softmax(logits)
-      console.log("=== Result", probas)
-    }
-    main()
-  </script>
+  </div>
+  <p id="resultat"></p>
+  <script src="script.js"></script>
 </body>
 </html>
+
